@@ -79,8 +79,10 @@ client.on("message", message => {
         message.channel.send(msg);
     }
     if (command === "pick") {
-        console.log("pick");
-        
+        const map = searchMap(args.join(" "));
+        maps[map.id].state = states.picked;
+        let msg = "Picked: " + map.name;
+        message.channel.send(msg);        
     }
     if (command === "givememap"){
         let choice = Math.floor(Math.random() * maps.length);  
