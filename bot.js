@@ -29,13 +29,14 @@ client.on('ready', () => {
 client.on('message', message => {
     if (message.content === '/maplist') {
         for (let map of maps){
-            if (!map.state)
+            if (map.state !== null)
             {
                 continue;
             }
             let msg = "";
             msg += map.name + " : " + toString(map.id);
             message.reply(msg);
+            console.log(msg);
         }
        }
 });
