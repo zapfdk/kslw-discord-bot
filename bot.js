@@ -5,9 +5,8 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
- 
-
 client.on('message', message => {
+    console.log("ping message");
     if (message.content === 'ping') {
        message.reply('pong');
        }
