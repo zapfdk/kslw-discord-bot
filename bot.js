@@ -3,6 +3,12 @@ const client = new Discord.Client();
 
 const commandPrefix = "/";
 const states = {available: 0, out: 1, picked: 2, banned: 3};
+const statesToTxt = {
+    0: "Verfügbar",
+    1: "Draußen",
+    2: "Gepicked",
+    3: "Banned"    
+}
 
 let maps = [
     {id: 0, name: "Luigis Piste", state: states.available},
@@ -33,7 +39,7 @@ client.on("ready", () => {
 function createMapList(){
     let msg = "";
     for (let map of maps){
-        msg += map.name + ", Status: " + (map.state ? "Gewählt\n" : "Noch da\n");
+        msg += map.name + ", Status: " + (map.state === states.available ? "Gewählt\n" : "Noch da\n");
     }
     return msg;
 };
@@ -50,19 +56,19 @@ client.on("message", message => {
         console.log("maps");
         let msg = createMapList();
         message.channel.send(msg);
-
     }
     if (command === "ban") {
         console.log("ban");
-
+        
     }
     if (command === "pick") {
         console.log("pick");
         
     }
     if (command === "givememap"){
-        console.log("givememap");
-
+        let choice = Math.floor(Math.random() * maps.length);  
+        let msg = "Map: " + maps[choice].name;
+        message.channel.send(msg);
     }
 });
 
