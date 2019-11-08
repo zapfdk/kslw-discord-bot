@@ -35,8 +35,7 @@ function createMapList(){
     for (let map of maps){
         msg += map.name + ", Status: " + (map.state ? "Gewählt\n" : "Noch da\n");
     }
-    message.channel.send(msg);
-
+    return msg;
 };
 
 client.on("message", message => {
@@ -45,10 +44,13 @@ client.on("message", message => {
     const args = message.content.slice(prefix.length).split(" ");
     const command = args.shift().toLowerCase();
 
-
+    console.log()
 
     if ( command === "maps") {
         console.log("maps");
+        let msg = createMapList();
+        message.channel.send(msg);
+
     }
     if (command === "ban") {
         console.log("ban");
@@ -62,9 +64,6 @@ client.on("message", message => {
         console.log("givememap");
 
     }
-
-
-
 });
 
-client.login(process.env.BOT_TOKEN)
+client.login("NjQyNDIxNDA5ODE3MTY1ODM0.XcWzRg.Cy4l3_18a0mnEESSuKJosBJlWl4");
