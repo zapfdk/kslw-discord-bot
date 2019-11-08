@@ -41,7 +41,7 @@ function createMapList(){
 client.on("message", message => {
     if (!message.content.startsWith(commandPrefix) || message.author.bot) return;
 
-    const args = message.content.slice(prefix.length).split(" ");
+    const args = message.content.slice(commandPrefix.length).split(" ");
     const command = args.shift().toLowerCase();
 
     console.log()
