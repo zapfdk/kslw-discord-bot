@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const client = new Discord.Client();
+const Fuse = require("fuse.js");
 
 const commandPrefix = "/";
 const states = {available: 0, out: 1, picked: 2, banned: 3};
@@ -8,7 +8,19 @@ const statesToTxt = {
     1: "Draußen",
     2: "Gepicked",
     3: "Banned"    
-}
+};
+
+const fuzzySearchOptions = {
+    shouldSort: true,
+    threshold: 1,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+      "name"
+    ]
+};
 
 let maps = [
     {id: 0, name: "Luigis Piste", state: states.available},
@@ -27,10 +39,10 @@ let maps = [
     {id: 13, name: "Dinodino-Dschungel", state: states.available},
     {id: 14, name: "Bowsers Festung", state: states.available},
     {id: 15, name: "Regenbogen-Boulevard", state: states.available}
-  ];
+];
 
-
-
+const client = new Discord.Client();
+const fuse = new Fuse(maps, fuzzySearchOptions);
 
 client.on("ready", () => {
     console.log("I am ready!");
@@ -39,9 +51,14 @@ client.on("ready", () => {
 function createMapList(){
     let msg = "";
     for (let map of maps){
-        msg += map.name + ", Status: " + (map.state === states.available ? "Gewählt\n" : "Noch da\n");
+        msg += map.name + ", Status: " + statesToTxt[map.state];
     }
     return msg;
+};
+
+function searchMap(searchString){
+    const result = fuse.search(searchString);
+    return result[0];
 };
 
 client.on("message", message => {
@@ -50,16 +67,16 @@ client.on("message", message => {
     const args = message.content.slice(commandPrefix.length).split(" ");
     const command = args.shift().toLowerCase();
 
-    console.log()
-
     if ( command === "maps") {
         console.log("maps");
         let msg = createMapList();
         message.channel.send(msg);
     }
     if (command === "ban") {
-        console.log("ban");
-        
+        const map = searchMap(args.join(" "));
+        maps[map.id].state = states.banned;
+        let msg = "Banned: " + map.name;
+        message.channel.send(msg);
     }
     if (command === "pick") {
         console.log("pick");
