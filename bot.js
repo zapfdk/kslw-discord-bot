@@ -30,10 +30,9 @@ client.on('message', message => {
     if (message.content === '/maps') {
         let msg = "";
         for (let map of maps){
-            msg += map.name + ", Status: " + map.state ? "Gewählt" : "Noch da";
-            message.reply(msg);
-            console.log(msg);
+            msg += map.name + ", Status: " + (map.state ? "Gewählt" : "Noch da");
         }
+        message.channel.send(msg);
        }
 });
 
