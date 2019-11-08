@@ -27,14 +27,10 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-    if (message.content === '/maplist') {
+    if (message.content === '/maps') {
+        let msg = "";
         for (let map of maps){
-            if (map.state !== null)
-            {
-                continue;
-            }
-            let msg = "";
-            msg += map.name + " : " + toString(map.id);
+            msg += map.name + ", Status: " + map.state ? "Gewählt" : "Noch da";
             message.reply(msg);
             console.log(msg);
         }
