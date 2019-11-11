@@ -57,8 +57,6 @@ async def out(ctx, arg):
     result_name = maps.get_map_name(result_id)
     maps.out_map(result_id)
 
-    map_states = [MapState.available, MapState.banned, MapState.picked]
-
     await ctx.send("Map is out: " + result_name)
 
 @bot.command(name="resetmap")
@@ -66,8 +64,6 @@ async def resetmap(ctx, arg):
     result_id = maps.search_map_fuzzy(arg)
     result_name = maps.get_map_name(result_id)
     maps.reset_map(result_id)
-
-    map_states = [MapState.available, MapState.banned, MapState.picked]
 
     await ctx.send("Map resetted: " + result_name)
 
