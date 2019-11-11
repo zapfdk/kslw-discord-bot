@@ -1,13 +1,9 @@
 import os
 import random
-from dotenv import load_dotenv
 
 from discord.ext import commands
 
 from maps import get_map_list, MapState, KslwException
-
-load_dotenv()
-token = os.getenv('BOT_TOKEN')
 
 bot = commands.Bot(command_prefix='/')
 
@@ -82,4 +78,4 @@ async def givememap(ctx):
     maps.out_map(map_choice.id)
     await ctx.send("Map Selection: " + map_choice.name)
 
-bot.run(token)
+bot.run(os.environ["BOT_TOKEN"])
